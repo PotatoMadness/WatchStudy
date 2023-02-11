@@ -1,4 +1,7 @@
 package com.example.testevinfra
 
-class WatchApplication {
-}
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class WatchApplication : Application()

@@ -1,9 +1,9 @@
-package com.evinfra.data.usecase
+package com.example.testevinfra
 
 import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Looper
 import android.util.Log
-import com.evinfra.data.model.map.EIMapPoint
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -18,16 +18,12 @@ class LocationUpdatesUseCase @Inject constructor(
     private val client: FusedLocationProviderClient,
     private val looper: Looper
 ) {
-    var lastLocation: EIMapPoint = DEF_LOCATION
-
     @SuppressLint("MissingPermission")
     private val _locationUpdates = callbackFlow {
         val callback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 locationResult.lastLocation?.let {
-                    val newLoc = EIMapPoint(it.latitude, it.longitude)
-                    lastLocation = newLoc
-                    trySend(newLoc)
+                    trySend(it)
                 }
             }
         }
@@ -54,11 +50,10 @@ class LocationUpdatesUseCase @Inject constructor(
         }
     }
 
-    val locationUpdates: Flow<EIMapPoint> = _locationUpdates
+    val locationUpdates: Flow<Location> = _locationUpdates
 
     companion object {
         private const val UPDATE_INTERVAL_SECS = 10L
         private const val FASTEST_UPDATE_INTERVAL_SECS = 1L
-        private val DEF_LOCATION = EIMapPoint(37.5666101, 126.97838810)
     }
 }

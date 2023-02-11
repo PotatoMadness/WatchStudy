@@ -14,7 +14,6 @@ class StationRepository {
 
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
-                TODO("헤더를 추가해야합니다.")
                 val request = chain.request().newBuilder()
                     .build()
                 chain.proceed(request)
@@ -23,16 +22,16 @@ class StationRepository {
             .build()
 
         service = Retrofit.Builder()
-            .baseUrl("https://openapi.naver.com")
+            .baseUrl("https://dev.soft-berry.co.kr")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(StationService::class.java)
     }
 
-    suspend fun getImageSearch(latitude: String, longitude: String): Result<List<StationInfo>> {
+    suspend fun getStationList(latitude: Double, longitude: Double): Result<List<StationInfo>> {
         kotlin.runCatching {
-            service.getStationList(latitude, longitude)
+            service.getStationList(latitude.toString(), longitude.toString())
         }.onSuccess {
             return Result.success(it.list)
         }.onFailure {
