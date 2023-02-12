@@ -10,7 +10,7 @@ class StationRepository {
 
     init {
         val logger = HttpLoggingInterceptor()
-        logger.level = HttpLoggingInterceptor.Level.BASIC
+        logger.level = HttpLoggingInterceptor.Level.BODY
 
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
@@ -21,6 +21,7 @@ class StationRepository {
             .addInterceptor(logger)
             .build()
 
+
         service = Retrofit.Builder()
             .baseUrl("https://dev.soft-berry.co.kr")
             .client(client)
@@ -29,15 +30,15 @@ class StationRepository {
             .create(StationService::class.java)
     }
 
-    suspend fun getStationList(latitude: Double, longitude: Double): Result<List<StationInfo>> {
+    suspend fun getStationList(latitude: Double, longitude: Double): ResultStationInfo {
         kotlin.runCatching {
             service.getStationList(latitude.toString(), longitude.toString())
         }.onSuccess {
-            return Result.success(it.list)
+            return ResultStationInfo.Success(it)
         }.onFailure {
-            return Result.failure(it)
+            return ResultStationInfo.Failed(it)
         }.also {
-            return Result.failure(Exception("정보를 가져오지 못함"))
+            return ResultStationInfo.Failed(Exception("정보를 가져오지 못함"))
         }
     }
 }
