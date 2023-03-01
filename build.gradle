@@ -5,10 +5,10 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.41'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.43.2'
         classpath 'com.google.firebase:perf-plugin:1.4.2'    }
 }
 allprojects {
