@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(
 
     val stationList = MutableStateFlow<List<StationInfo>>(arrayListOf())
     val selectedStation = MutableStateFlow<StationInfo?>(null)
-    private val refreshing = MutableStateFlow(false)
+    private val refreshing = MutableStateFlow(true)
 
     val lastLocation = locationUpdatesUseCase.locationUpdates.stateIn(
         viewModelScope,
@@ -95,7 +95,7 @@ class MainViewModel @Inject constructor(
 data class MainViewState(
     val currentLocation: Location? = null,
     val stationList: List<StationInfo> = emptyList(),
-    val refreshing: Boolean = false,
+    val refreshing: Boolean = true,
     val selectedStation: StationInfo? = null,
     val errorMessage: String? = null
 )

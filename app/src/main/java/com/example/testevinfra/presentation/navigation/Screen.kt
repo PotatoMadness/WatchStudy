@@ -7,4 +7,5 @@ sealed class Screen(
     object Main : Screen("main")
     object StationList : Screen("stationList")
     object StationDetail : Screen("stationDetail")
+    object Loading : Screen("loading")
 }
