@@ -1,5 +1,6 @@
-package com.example.testevinfra
+package com.example.testevinfra.data
 
+import com.example.testevinfra.ResultStationInfo
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

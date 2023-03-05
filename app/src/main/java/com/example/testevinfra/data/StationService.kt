@@ -1,5 +1,6 @@
-package com.example.testevinfra
+package com.example.testevinfra.data
 
+import com.example.testevinfra.ResponseStationInfo
 import retrofit2.http.GET
 import retrofit2.http.Query
 

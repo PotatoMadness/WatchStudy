@@ -1,9 +1,8 @@
-package com.example.testevinfra.theme
+package com.example.testevinfra.presentation.theme
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 
 
 private val EVILightColorScheme = lightColorScheme(
