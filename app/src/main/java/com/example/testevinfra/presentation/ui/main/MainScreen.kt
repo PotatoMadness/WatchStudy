@@ -30,7 +30,7 @@ fun Main(onClick: () -> Unit = {},
          viewModel: MainViewModel = viewModel()) {
     val viewState by viewModel.state.collectAsState()
     var addr = "알수 없음"
-    viewModel.lastLocation.value?.let{
+    viewState.currentLocation?.let{
         val gCoder = Geocoder(LocalContext.current, Locale.KOREA)
         val locInfo = gCoder.getFromLocation(it.latitude, it.longitude, 1) ?: return@let
         addr = locInfo[0].thoroughfare
@@ -80,7 +80,8 @@ fun Main(onClick: () -> Unit = {},
         ))
         Box(modifier = Modifier
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.secondaryContainer)) {
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .clickable(onClick = { viewModel.updateList() })  ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_refresh),
                 contentDescription = null

@@ -27,6 +27,7 @@ import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.example.testevinfra.presentation.navigation.Screen
 import com.example.testevinfra.presentation.theme.EVITheme
 import com.example.testevinfra.presentation.ui.detail.DetailScreen
+import com.example.testevinfra.presentation.ui.main.LoadingScreen
 import com.example.testevinfra.presentation.ui.main.Main
 import com.example.testevinfra.presentation.ui.main.MainViewModel
 import com.example.testevinfra.presentation.ui.station.StationScreen
@@ -108,7 +109,7 @@ fun WearApp(
 
         SwipeDismissableNavHost(
             navController = swipeDismissableNavController,
-            startDestination = Screen.Main.route,
+            startDestination = Screen.Loading.route,
             modifier = Modifier.background(androidx.wear.compose.material.MaterialTheme.colors.background)
         ) {
             // Main Window
@@ -133,6 +134,11 @@ fun WearApp(
 
             composable(route = Screen.StationDetail.route) {
                 DetailScreen()
+            }
+
+            composable(route = Screen.Loading.route) {
+                LoadingScreen(viewModel = viewModel,
+                    onLoadDone = { swipeDismissableNavController.navigate(Screen.Main.route) })
             }
         }
     }

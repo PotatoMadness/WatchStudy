@@ -29,11 +29,10 @@ class MainViewModel @Inject constructor(
     val selectedStation = MutableStateFlow<StationInfo?>(null)
     private val refreshing = MutableStateFlow(true)
 
-    val lastLocation = locationUpdatesUseCase.locationUpdates.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(),
-        null
-    )
+    val lastLocation = locationUpdatesUseCase.locationUpdates.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val savedLocation: MutableStateFlow<Location?> = MutableStateFlow(null)
+
     var timestamp = MutableStateFlow("00시 00분 기준")
 
     init {
@@ -41,13 +40,12 @@ class MainViewModel @Inject constructor(
             // Combines the latest value from each of the flows, allowing us to generate a
             // view state instance which only contains the latest values.
             combine(
-                lastLocation,
+                savedLocation,
                 stationList,
                 selectedStation,
                 refreshing
             ) { location, stationList, selectedStation, refreshing ->
-                if (location == null) return@combine
-                _state.value = MainViewState(
+                MainViewState(
                     currentLocation = location,
                     stationList = stationList,
                     selectedStation = selectedStation,
@@ -57,11 +55,15 @@ class MainViewModel @Inject constructor(
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
                 throw throwable
-            }.collect ()
+            }.collect {
+                _state.value = it
+            }
         }
 
         viewModelScope.launch {
-            lastLocation.filterNotNull().collect {
+            lastLocation.collect {
+                if (it == null) return@collect
+                refreshing.value = true
                 if (stationList.value.isEmpty()) {
                     refresh(it)
                 }
@@ -72,6 +74,7 @@ class MainViewModel @Inject constructor(
     private fun refresh(loc: Location) {
         viewModelScope.launch {
             runCatching {
+                savedLocation.value = loc
                 refreshing.value = true
                 val result = repository.getStationList(loc.latitude, loc.longitude)
                 if (result is ResultStationInfo.Success) {
@@ -89,6 +92,12 @@ class MainViewModel @Inject constructor(
 
     fun onStationSelected(station: StationInfo) {
         selectedStation.value = station
+    }
+
+    fun updateList() {
+        viewModelScope.launch {
+            lastLocation.first()?.let { refresh(it) }
+        }
     }
 }
 

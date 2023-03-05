@@ -1,6 +1,7 @@
 package com.example.testevinfra.presentation.ui.station
 
 import android.location.Location
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -30,6 +31,7 @@ fun StationScreen(
     onClick: () -> Unit = {}) {
     val viewState by viewModel.state.collectAsState()
     StationRow(
+        modifier = Modifier.padding(4.dp),
         stationList = viewState.stationList,
         currentLocation = viewState.currentLocation,
         onClick = { station ->
@@ -48,7 +50,8 @@ fun StationRow (
     ) {
         val lastIndex = stationList.size - 1
         LazyRow(
-            modifier = modifier,
+            modifier = modifier.fillMaxSize()
+                .background(MaterialTheme.colorScheme.onPrimaryContainer),
             contentPadding = PaddingValues(
                 start = 8.dp, top = 8.dp,
                 end = 8.dp, bottom = 24.dp)
