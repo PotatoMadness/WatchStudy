@@ -1,37 +1,38 @@
 package com.example.testevinfra.presentation.theme
 
 import android.annotation.SuppressLint
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 
-private val EVILightColorScheme = lightColorScheme(
-    primary = Grey99,
-    onPrimary = Grey20,
+private val EVIDarkColorScheme = lightColorScheme(
+    primary = Nt000,
+    onPrimary = Nt900,
     primaryContainer = BlueGrey30,
     onPrimaryContainer = Grey90,
     inversePrimary = Grey80,
-    secondary = DarkBlue80,
-    onSecondary = DarkBlue20,
-    secondaryContainer = DarkBlue30,
+    secondary = Nt200,
+    onSecondary = Nt700,
+    secondaryContainer = Nt300,
     onSecondaryContainer = DarkBlue90,
-    tertiary = Yellow80,
-    onTertiary = Yellow20,
-    tertiaryContainer = Yellow30,
+    tertiary = Nt300,
+    onTertiary = Nt600,
+    tertiaryContainer = Nt400,
     onTertiaryContainer = Yellow90,
     error = Red80,
     onError = Red20,
     errorContainer = Red30,
     onErrorContainer = Red90,
-    background = Grey10,
-    onBackground = Grey90,
-    surface = Grey10,
+    background = Nt999,
+    onBackground = Nt000,
+    surface = Gr400,
     onSurface = Grey80,
     inverseSurface = Grey90,
     inverseOnSurface = Grey20,
     surfaceVariant = BlueGrey30,
     onSurfaceVariant = BlueGrey80,
-    outline = BlueGrey60
+    outline = Nt500
 )
 
 @SuppressLint("NewApi")
@@ -40,7 +41,7 @@ fun EVITheme(
     content: @Composable () -> Unit
 ) {
     androidx.compose.material3.MaterialTheme(
-        colorScheme = EVILightColorScheme,
+        colorScheme = EVIDarkColorScheme,
         typography = Typography,
         content = content
     )

@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
 
     val savedLocation: MutableStateFlow<Location?> = MutableStateFlow(null)
 
-    var timestamp = MutableStateFlow("00시 00분 기준")
+    private var _timeStamp = MutableStateFlow("00시 00분 기준")
 
     init {
         viewModelScope.launch {
@@ -43,14 +43,15 @@ class MainViewModel @Inject constructor(
                 savedLocation,
                 stationList,
                 selectedStation,
-                refreshing
+                refreshing,
             ) { location, stationList, selectedStation, refreshing ->
                 MainViewState(
                     currentLocation = location,
                     stationList = stationList,
                     selectedStation = selectedStation,
                     refreshing = refreshing,
-                    errorMessage = null /* TODO */
+                    errorMessage = null /* TODO */,
+                    timeStamp = _timeStamp.value
                 )
             }.catch { throwable ->
                 // TODO: emit a UI error here. For now we'll just rethrow
@@ -81,7 +82,7 @@ class MainViewModel @Inject constructor(
                     stationList.emit(result.result.list)
                     val sdf = SimpleDateFormat("hh시 mm분 기준")
                     val currentDateAndTime = sdf.format(Date())
-                    timestamp.emit(currentDateAndTime)
+                    _timeStamp.emit(currentDateAndTime)
                 }
             }
             // TODO: look at result of runCatching and show any errors
@@ -106,5 +107,6 @@ data class MainViewState(
     val stationList: List<StationInfo> = emptyList(),
     val refreshing: Boolean = true,
     val selectedStation: StationInfo? = null,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val timeStamp: String = ""
 )

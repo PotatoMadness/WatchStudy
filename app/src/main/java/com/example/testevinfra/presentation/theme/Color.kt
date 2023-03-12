@@ -2,6 +2,19 @@ package com.example.testevinfra.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
+val Nt200_20 = Color(0x33DDE1E6)
+val Nt200_13 = Color(0x21DDE1E6)
+val Nt000 = Color(0xFFFFFFFF)
+val Nt200 = Color(0xFFDDE1E6)
+val Nt300 = Color(0xFFC1C7CD)
+val Nt400 = Color(0xFFA2A9B0)
+val Nt500 = Color(0xFF878D96)
+val Nt600 = Color(0xFF697077)
+val Nt700 = Color(0xFF4D5358)
+val Nt900 = Color(0xFF21272A)
+val Nt999 = Color(0xFF000000)
+
+val Gr400 = Color(0xFF18CC8B)
 
 val Blue10 = Color(0xFF000F5E)
 val Blue20 = Color(0xFF001E92)
