@@ -25,14 +25,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.testevinfra.StationInfo
+import com.example.testevinfra.R
+import com.example.testevinfra.data.StationInfo
 import com.example.testevinfra.presentation.ui.main.MainViewModel
 import com.example.testevinfra.util.getDistance
-import com.example.testevinfra.R
 
 @Composable
 fun StationScreen(
@@ -186,11 +185,7 @@ private fun StationInfoRowItem(
             textAlign = TextAlign.Center
         )
 
-        val standard = stationInfo.cl.count { it.p.toInt() < 50 }
-        val standardActive = stationInfo.cl.count { it.p.toInt() < 50 && it.cst == "2"}
-        val fast = stationInfo.cl.count { it.p.toInt() >= 50 }
-        val fastActive = stationInfo.cl.count { it.p.toInt() >= 50 && it.cst == "2" }
-        if (standard > 0) {
+        if (stationInfo.standard.isNotEmpty()) {
             Row(verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(top = 2.dp)) {
                 Image(painter = painterResource(id = R.drawable.icon_electric),
@@ -203,7 +198,7 @@ private fun StationInfoRowItem(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "${standardActive}/${standard}",
+                    text = "${stationInfo.standardActive.size}/${stationInfo.standard.size}",
                     color = MaterialTheme.colorScheme.surface,
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(start = 4.dp),
@@ -211,7 +206,7 @@ private fun StationInfoRowItem(
                 )
             }
         }
-        if (fast > 0) {
+        if (stationInfo.fast.isNotEmpty()) {
             Row(verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(top = 2.dp)) {
                 Image(painter = painterResource(id = R.drawable.icon_electric),
@@ -224,7 +219,7 @@ private fun StationInfoRowItem(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "${fastActive}/${fast}",
+                    text = "${stationInfo.fastActive.size}/${stationInfo.fast.size}",
                     color = MaterialTheme.colorScheme.surface,
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(start = 2.dp),
@@ -249,7 +244,8 @@ fun PreviewEpisodeListItem() {
             StationInfo(
                 snm = "서울 강남효성해링턴타워 2", cl = arrayListOf(),
                 id = "1234", op = "이카플러그",
-                lat = "37.491281", lon = "127.029276"
+                lat = "37.491281", lon = "127.029276",
+                roof = "0", st = 2
             ),
 //            StationInfo(
 //                snm = "asdf", cl = arrayListOf(),

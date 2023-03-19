@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testevinfra.LocationUpdatesUseCase
 import com.example.testevinfra.ResultStationInfo
-import com.example.testevinfra.StationInfo
+import com.example.testevinfra.data.StationInfo
 import com.example.testevinfra.data.StationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
