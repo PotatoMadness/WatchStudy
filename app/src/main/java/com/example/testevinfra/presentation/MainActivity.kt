@@ -133,7 +133,8 @@ fun WearApp(
             }
 
             composable(route = Screen.StationDetail.route) {
-                DetailScreen()
+                DetailScreen(
+                    viewModel = viewModel,)
             }
 
             composable(route = Screen.Loading.route) {
