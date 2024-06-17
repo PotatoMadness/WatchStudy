@@ -63,6 +63,7 @@ fun StationRow(
     currentLocation: Location?
 ) {
     val lastIndex = stationList.size - 1
+    // TODO :: bottom indicator
     LazyRow(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically
@@ -76,7 +77,7 @@ fun StationRow(
             if (LocalConfiguration.current.isScreenRound) {
                 Box(
                     modifier = Modifier
-                        .size(154.dp, 154.dp)
+                        .size(154.dp, 154.dp) // TODO :: window size 비율로 변경
                         .clip(CircleShape)
                         .background(
                             brush = Brush.linearGradient(listOf(Color(0x33DDE1E6), Color(0x21DDE1E6)))

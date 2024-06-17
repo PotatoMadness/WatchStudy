@@ -1,5 +1,6 @@
 package com.example.testevinfra.presentation.ui.detail
 
+import android.content.res.Configuration
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,11 +21,16 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.testevinfra.R
 import com.example.testevinfra.data.Charger
 import com.example.testevinfra.data.StationInfo
+import com.example.testevinfra.presentation.theme.EVITheme
 import com.example.testevinfra.presentation.ui.main.MainViewModel
+import com.example.testevinfra.presentation.ui.main.MainViewState
+import kotlinx.coroutines.selects.select
 
 @Composable
 fun DetailScreen(
@@ -33,17 +39,24 @@ fun DetailScreen(
     val viewState by viewModel.state.collectAsState()
     val selectedStation = viewState.selectedStation ?: return
 
-    val configuration = LocalConfiguration.current
+    DetailScreen(
+        selectedStation = selectedStation)
+}
 
+@Composable
+fun DetailScreen(
+    selectedStation: StationInfo,
+){
+    val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
     val screenWidth = configuration.screenWidthDp
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(start = 16.dp, end = 16.dp),
         contentAlignment = Alignment.Center
     ) {
+        // TODO :: scroll bar 표시
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
@@ -259,4 +272,46 @@ fun ChargerDetail(
         )
     }
     Spacer(modifier = Modifier.height(8.dp))
+}
+
+
+@Preview
+@Composable
+fun previewDetail() {
+    ChargerDetail(Charger("11096","2","50","1", "1시간 32분 22초 전", "", "43kwh", ""))
+}
+val list = listOf(Charger("11056","2","80","1", "충전 중", "", "-", ""),
+    Charger("11096","2","10","1", "충전 중", "", "-", ""),
+    Charger("11096","8","50","1", "12시간 전", "", "43kwh", ""),
+    Charger("11096","8","100","1", "1시간 32분 22초 전", "", "43kwh", ""),
+)
+val station = StationInfo(
+    id = "115450",
+    snm = "GS칼텍스 마전주유소",
+    op = "GS칼텍스",
+    lat = "37.593308",
+    lon = "126.676002",
+    cl = list,
+    roof = "0",
+    st = 6
+)
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showSystemUi = true,
+    device = Devices.WEAR_OS_SMALL_ROUND)
+@Composable
+fun previewHeader() {
+    EVITheme {
+        DetailScreen(selectedStation = station)
+    }
+}
+
+@Preview(widthDp = 180, heightDp = 600)
+@Composable
+fun previewBody() {
+    EVITheme {
+        Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+            DetailBody(stationInfo = station)
+        }
+    }
 }

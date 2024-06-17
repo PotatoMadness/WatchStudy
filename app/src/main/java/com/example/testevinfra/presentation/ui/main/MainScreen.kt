@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.testevinfra.R
+import com.example.testevinfra.presentation.theme.EVITheme
 import java.util.*
 
 @Composable
@@ -91,14 +92,18 @@ fun MainContainer(
             )
         ) {
             Text(
-                modifier = Modifier.fillMaxWidth().padding(top = 7.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 7.dp),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 text = timeStamp,
             )
             Text(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 7.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 7.dp),
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.surface,
                 style = MaterialTheme.typography.titleSmall,
@@ -119,18 +124,19 @@ fun MainContainer(
 }
 
 @Preview(
-    apiLevel = 26,
     uiMode = Configuration.UI_MODE_NIGHT_NO,
     showSystemUi = true,
     device = Devices.WEAR_OS_SMALL_ROUND,
 )
 @Composable
 fun prevMainView() {
-    Box {
-        MainContainer(
-            onClick = { },
-            addr = "역삼동",
-            size = 1,
-            onUpdate = { })
+    EVITheme {
+        Box {
+            MainContainer(
+                onClick = { },
+                addr = "역삼동",
+                size = 1,
+                onUpdate = { })
+        }
     }
 }
